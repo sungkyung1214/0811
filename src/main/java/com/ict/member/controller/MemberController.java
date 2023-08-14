@@ -45,16 +45,20 @@ public class MemberController {
 	@PostMapping("/member_login.do")
 	public ModelAndView getMemberLogIn(MemberVO m2vo, HttpSession session) {
 		ModelAndView mv = new ModelAndView("redirect:/");
+		
 		// 입력한 id의 패스워드를 DB에 가져와서 입력한 pwd와 비교해서 맞으면 성공 틀리면 실패
 		// id로 DB에 저장된 pwd 가져오기
-		
 		MemberVO pwd = memberService.getMemberPwd(m2vo.getM_id());
 		if(! passwordEncoder.matches(m2vo.getM_pw(),pwd.getM_pw())) {
 			session.setAttribute("loginChk", "fail");
 			return mv;
 		}else {
-			session.setAttribute("loginChk", "ok");
 			session.setAttribute("m2vo", pwd);
+			session.setAttribute("loginChk", "ok");
+			// admin 성공시
+			if(pwd.getM_id().equals("admin")) {
+				session.setAttribute("admin","ok");
+			}
 			return mv;
 		}
 	}	
@@ -66,7 +70,7 @@ public class MemberController {
 		//session.invalidate();
 		session.removeAttribute("mvo");    	// 이것도 지워지긴 하는거 같은데..
 		session.removeAttribute("loginChk");
-		
+		session.removeAttribute("admin");
 		return new ModelAndView("redirect:/");
 	}
 }

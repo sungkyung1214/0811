@@ -43,6 +43,9 @@
 	function go_board() {
 		location.href="/board_list.do";
 	}
+	function go_shop() {
+		location.href="/shop_list.do";
+	}
 </script>
 </head>
 <body>
@@ -51,6 +54,7 @@
 	<button onclick="go_guestbook2()">Guestbook2</button>
 	<button onclick="go_bbs()">BBS</button>
 	<button onclick="go_board()">Board</button>
+	<button onclick="go_shop()">Shop</button>
 	
 	<hr>
 	<div id="login" style="margin: 30px;">
